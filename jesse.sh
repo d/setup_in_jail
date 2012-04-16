@@ -13,7 +13,6 @@ SCRATCH=$(mktemp -d /tmp/vcap_scratch.XXX)
 # use a bare repo as cache
 rsync -rl $PWD/.git/ /tmp/vcap.git
 git clone /tmp/vcap.git $SCRATCH
-git submodule foreach --recursive "set -xe; rsync -rl \$PWD/.git/ /tmp/\$name.git"
 git submodule foreach "set -xe; rsync -rl \$PWD /$SCRATCH/\$path"
 
 (

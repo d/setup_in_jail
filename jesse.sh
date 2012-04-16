@@ -13,7 +13,7 @@ SCRATCH=$(mktemp -d /tmp/vcap_scratch.XXX)
 # use a bare repo as cache
 rsync -rl $PWD/.git/ /tmp/vcap.git
 git clone /tmp/vcap.git $SCRATCH
-git submodule foreach "set -xe; rsync -rl \$PWD /$SCRATCH/\$path"
+git submodule foreach "set -xe; rsync -rl \$PWD $SCRATCH/"
 
 (
   cd $SCRATCH
@@ -36,6 +36,14 @@ cd cloudfoundry/vcap
 git status
 
 time ~/cloudfoundry/vcap/dev_setup/bin/vcap_dev_setup -a
+
+cd ~/cloudfoundry/vcap/tests
+source ~/.cloudfoundry_deployment_profile
+bundle install
+aptitude install -y default-jdk maven2
+~/cloudfoundry/vcap/dev_setup/bin/vcap_dev start
+bundle exec rake build
+bundle exec rake tests
 EOS
 chmod +x $TEST_RUNNER
 

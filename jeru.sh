@@ -24,6 +24,7 @@ mkfs.ext4 -F -O ^has_journal fs
 popd
 bundle install
 sudo aptitude install debootstrap linux-image-generic-lts-backport-oneiric
+unset SSH_AUTH_SOCK SSH_CLIENT SSH_CONNECTION SSH_TTY
 bundle exec rake setup
 sudo -s << WARDEN
 source ~/.cloudfoundry_deployment_profile
